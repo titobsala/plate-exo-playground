@@ -9,9 +9,13 @@ import { Plate } from '@udecode/plate/react';
 import { useCreateEditor } from '@/components/editor/use-create-editor';
 import { SettingsDialog } from '@/components/editor/settings';
 import { Editor, EditorContainer } from '@/components/plate-ui/editor';
+import { vsmeTemplate } from '@/lib/vsme-template';
 
 export function PlateEditor() {
-  const editor = useCreateEditor();
+  const editor = useCreateEditor({
+    plugins: [], // Mantendo os plugins vazios por enquanto
+    value: vsmeTemplate, // Passando o template como valor inicial
+  });
 
   return (
     <DndProvider backend={HTML5Backend}>

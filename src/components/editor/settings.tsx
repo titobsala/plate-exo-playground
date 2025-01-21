@@ -38,6 +38,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/plate-ui/popover';
+import Anthropic from '@anthropic-ai/sdk';
 
 interface Model {
   label: string;
@@ -52,12 +53,9 @@ interface SettingsContextType {
 }
 
 export const models: Model[] = [
-  { label: 'gpt-4o-mini', value: 'gpt-4o-mini' },
-  { label: 'gpt-4o', value: 'gpt-4o' },
-  { label: 'gpt-4-turbo', value: 'gpt-4-turbo' },
-  { label: 'gpt-4', value: 'gpt-4' },
-  { label: 'gpt-3.5-turbo', value: 'gpt-3.5-turbo' },
-  { label: 'gpt-3.5-turbo-instruct', value: 'gpt-3.5-turbo-instruct' },
+  { label: 'claude-3-opus', value: 'claude-3-opus-20240229' },
+  { label: 'claude-3-sonnet', value: 'claude-3-sonnet-20240229' },
+  { label: 'claude-3-haiku', value: 'claude-3-haiku-20240229' },
 ];
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -66,7 +64,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [keys, setKeys] = useState({
-    openai: '',
+    anthropic: '',
     uploadthing: '',
   });
   const [model, setModel] = useState<Model>(models[0]);
@@ -88,7 +86,7 @@ export function useSettings() {
   return (
     context ?? {
       keys: {
-        openai: '',
+        Anthropic: '',
         uploadthing: '',
       },
       model: models[0],
@@ -120,8 +118,10 @@ export function SettingsDialog() {
       ...completeOptions,
       body: {
         ...completeOptions.body,
-        apiKey: tempKeys.openai,
+        apiKey: tempKeys.anthropic, // Mudança aqui: openai -> anthropic
         model: model.value,
+        maxTokens: 1024, // Adicionado para Anthropic
+        stream: true, // Adicionado para suporte a streaming
       },
     });
   };
@@ -148,8 +148,8 @@ export function SettingsDialog() {
           <a
             className="flex items-center"
             href={
-              service === 'openai'
-                ? 'https://platform.openai.com/api-keys'
+              service === 'anthropic'
+                ? 'https://console.anthropic.com/settings/keys'
                 : 'https://uploadthing.com/dashboard'
             }
             rel="noopener noreferrer"
@@ -237,7 +237,7 @@ export function SettingsDialog() {
             </div>
 
             <div className="space-y-4">
-              {renderApiKeyInput('openai', 'OpenAI API key')}
+              {renderApiKeyInput('anthropic', 'Anthropic API key')}
 
               <div className="group relative">
                 <label

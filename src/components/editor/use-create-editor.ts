@@ -99,7 +99,12 @@ import { TableRowElement } from '@/components/plate-ui/table-row-element';
 import { TocElement } from '@/components/plate-ui/toc-element';
 import { ToggleElement } from '@/components/plate-ui/toggle-element';
 
-export const useCreateEditor = () => {
+export const useCreateEditor = ( props?: { 
+  plugins?: any[];
+  value?: any[];
+}
+  
+) => {
   return usePlateEditor({
     override: {
       components: withPlaceholders({
@@ -152,12 +157,13 @@ export const useCreateEditor = () => {
       }),
     },
     plugins: [
+      ...(props?.plugins || []),
       ...copilotPlugins,
       ...editorPlugins,
       FixedToolbarPlugin,
       FloatingToolbarPlugin,
     ],
-    value: [
+    value: props?.value || [
       {
         children: [{ text: 'Playground' }],
         type: 'h1',
