@@ -7,6 +7,8 @@ const anthropic = new Anthropic({
 export async function POST(req: Request) {
  try {
    const { prompt, system } = await req.json();
+   console.log('Prompt:', prompt);
+
    const response = await anthropic.messages.create({
      model: 'claude-3-opus-20240229',
      max_tokens: 50,
@@ -14,11 +16,12 @@ export async function POST(req: Request) {
      system,
      temperature: 0.7
    });
-   return Response.json({ completion: response.content });
- } catch (error) {
-   if (error instanceof Error && error.name === 'AbortError') {
-     return Response.json(null, { status: 408 });
-   }
-   return Response.json({ error: 'Failed to process AI request' }, { status: 500 });
- }
+
+   console.log('Response:', response);
+
+    return Response.json({ completion: response.content });
+  } catch (error) {
+    console.error('Error details:', error); // Melhorar log
+    return Response.json({ error: 'Failed to process AI request' }, { status: 500 });
+  }
 }

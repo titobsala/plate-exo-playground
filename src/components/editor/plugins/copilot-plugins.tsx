@@ -25,6 +25,7 @@ Rules:
 - If no context is provided or you can't generate a continuation, return "0" without explanation.`,
        },
        onFinish: (_, completion) => {
+        console.log('Completion:', completion);
          if (completion === '0') return;
          api.copilot.setBlockSuggestion({
            text: stripMarkdown(completion),
