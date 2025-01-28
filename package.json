@@ -68,6 +68,7 @@
     "@udecode/plate-media": "42.1.1",
     "@udecode/plate-mention": "42.0.0",
     "@udecode/plate-node-id": "42.0.0",
+    "@udecode/plate-paragraph": "^36.0.0",
     "@udecode/plate-reset-node": "42.0.0",
     "@udecode/plate-resizable": "42.0.0",
     "@udecode/plate-select": "42.0.0",
