@@ -13,7 +13,7 @@ export const vsmeTemplate = [
   },
   {
     type: ParagraphPlugin.key,
-    children: [{ text: 'Report generated using VSME Standard' }],
+    children: [{ text: 'Report generated using VSME Standard escreva aqui uma introdução da sua empresa: fale por exemplo do objetivo do relatorio, da historia da empresa e por ai vai' }],
   },
   // B1 - Basis for preparation
   {
